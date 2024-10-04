@@ -1,8 +1,8 @@
-# metabolitics-client
+# metabolitics-client-v2
 
 ## For Development
 
-1. Clone **metabolitics-client** repository by running the below command in a terminal.
+1. Clone **metabolitics-client-v2** repository by running the below command in a terminal.
 
     `git clone https://github.com/itu-bioinformatics-database-lab/metabolitics-client.git`
 
@@ -16,19 +16,19 @@
 
     `nvm use 10.5.0`
 
-4. Run the below command under **metabolitics-client** repository.
+4. Run the below command under **metabolitics-client-v2** repository.
 
     `npm ci`
 
-5. Run the below command under **metabolitics-client** repository.
+5. Run the below command under **metabolitics-client-v2** repository.
 
     `npm install -g @angular/cli@7.3.6`
 
-6. Run the below command under **metabolitics-client** repository from Command Prompt.
+6. Run the below command under **metabolitics-client-v2** repository from Command Prompt.
 
     `ng serve`
 
-7. To run **metabolitics-client**, open **localhost:4200**.
+7. To run **metabolitics-client-v2**, open **localhost:4200**.
 
 ## Install
 Run `npm install` for installation.
