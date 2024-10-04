@@ -4,11 +4,11 @@ import { SearchPageComponent } from 'src/metabol.search-engine/components';
 import { MainComponent } from './main/main.component';
 
 const appRoutes: Routes = [
-    {path: 'documentation', loadChildren: ()=> import('../documentation/documentation.module').then(m=>m.DocumentationModule)},
-    {path: 'demo', loadChildren: ()=> import('../demo/demo.module').then(m=>m.DemoModule)},
-    {path: 'panel',  loadChildren:()=> import('../metabol.panel/metabol.panel.module').then(m=>m.MetabolPanelModule)},
-    {path: 'auth', loadChildren:()=> import('../metabol.auth/metabol.auth.module').then(m=>m.MetabolAuthModule)},
-    {path: 'search', loadChildren:()=> import('../metabol.search-engine').then(m=>m.SearchEngineModule)},
+    {path: 'documentation', loadChildren: '../documentation/documentation.module#DocumentationModule'},
+    {path: 'demo', loadChildren: '../demo/demo.module#DemoModule'},
+    {path: 'panel',  loadChildren: '../metabol.panel/metabol.panel.module#MetabolPanelModule'},
+    {path: 'auth', loadChildren: '../metabol.auth/metabol.auth.module#MetabolAuthModule'},
+    {path: 'search', loadChildren: '../metabol.search-engine#SearchEngineModule'},
     
     {path: 'main', component: MainComponent},
     {path: '', redirectTo: '/main', pathMatch:'full'}
