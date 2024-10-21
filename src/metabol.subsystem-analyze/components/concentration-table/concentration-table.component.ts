@@ -85,7 +85,7 @@ export class ConcentrationTableComponent implements OnInit {
     console.log(this.conTable);
     this.unmappedMetabolites = this.conTable.filter((m) => {return m[4] == false;})
     this.form = this.createForm();
-    this.analyzeName = new FormControl("My Analyze - " + dateTime, Validators.required);
+    this.analyzeName = new FormControl("My Analysis - " + dateTime, Validators.required);
     this.isPublic = new FormControl(true, Validators.required);
     this.analyzeEmail = new FormControl("Email", Validators.required);
     this.Disease = new FormControl("Disease/Condition", Validators.required);
