@@ -81,19 +81,21 @@ export class ResultTableComponent implements OnInit, OnChanges {
   downloadCSV() {
     const separator = ',';  
 
-    const headers = ['"Name"'].concat(this.analysisNames.map(name => `"${name}"`));
+    const headers = ['"Name"'].concat(this.analysisNames);
 
     const headerRow = headers.join(separator);
 
+    // Prepare data rows
     const dataRows = this.tableData.map(row => {
       return headers.map(header => {
-        const key = header.replace(/"/g, '');  
-        const value = row[key] || row['name'] || '';
-        return `"${value}"`; 
+        const key = header === '"Name"' ? 'name' : header; 
+        const value = row[key] || '';
+        return key === 'name' ? `"${value}"` : value; 
       }).join(separator);
     });
 
-    const csvContent = headerRow + '\n' + dataRows.join('\n');
+    // Join header row and data rows
+    const csvContent = [headerRow].concat(dataRows).join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
 
