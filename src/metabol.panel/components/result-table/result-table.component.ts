@@ -85,7 +85,6 @@ export class ResultTableComponent implements OnInit, OnChanges {
 
     const headerRow = headers.join(separator);
 
-    // Prepare data rows
     const dataRows = this.tableData.map(row => {
       return headers.map(header => {
         const key = header === '"Name"' ? 'name' : header; 
@@ -94,7 +93,6 @@ export class ResultTableComponent implements OnInit, OnChanges {
       }).join(separator);
     });
 
-    // Join header row and data rows
     const csvContent = [headerRow].concat(dataRows).join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
