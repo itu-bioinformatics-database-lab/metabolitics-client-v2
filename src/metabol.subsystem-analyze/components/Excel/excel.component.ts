@@ -22,6 +22,8 @@ import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import synonyms from '../../../assets/datasets/synonyms_latest.json';
 
+import * as LZString from 'lz-string';
+
 export interface Disease2 {
   id: number;
   name: string;
@@ -121,7 +123,8 @@ export class ExcelComponent implements OnInit {
       map(name => name ? this._filter(name) : this.diseases.slice())
     );
 
-    this.usersData = JSON.parse(localStorage.getItem('metabolitics-data'));
+    this.usersData = JSON.parse(LZString.decompress(localStorage.getItem('metabolitics-data')) || '{study}');
+    //this.usersData = JSON.parse('{"study_name": "asdfasdf"}');
     this.usersData2 = this.usersData;
     for(let name in this.usersData2['analysis']){
       this.cases.push(name);
