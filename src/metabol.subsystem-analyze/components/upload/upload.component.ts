@@ -6,6 +6,7 @@ import {MetaboliteConcentration} from '../../models/metaboliteConcentration';
 import * as _ from 'lodash';
 import * as XLSX from 'xlsx';
 import { utils, write, WorkBook } from 'xlsx';
+import * as LZString from 'lz-string';
 
 import {SubsystemAnalyzeService} from '../../services/subsystem-analyze';
 import {Router} from '@angular/router';
@@ -98,6 +99,7 @@ export class UploadComponent {
 
   csvChange($event) {
     this.notify2.info('File Upload', 'File uploading');
+    
     this.readCsv($event.target);
   }
 
@@ -136,7 +138,13 @@ export class UploadComponent {
 
   ///////////////////////////////// Workbench
   readText(inputValue: any){
-    this.notify2.info('File Upload', 'File uploading');
+    this.notify2.info('File Upload', 'File uploading',{
+      timeOut:5000,
+    });
+    setTimeout(()=> 
+      this.notify2.info('Matching...', 'Performing metabolite matching. This may take a while. Please wait.',{
+      timeOut:50000,
+    }), 5000);
 
     this.file3 = inputValue.target.files[0];
     let fileReader = new FileReader();
@@ -146,10 +154,13 @@ export class UploadComponent {
       this.httpClient.post(`${AppSettings.API_ENDPOINT}/workbench`, {
         data: fileReader.result
       }).subscribe(data => {
+          this.notify2.remove();
           const recData = data as JSON;
-          console.log(data);
+          //console.log(data);
 
-          localStorage.setItem('metabolitics-data', JSON.stringify(recData));
+          const compressedData = LZString.compress(JSON.stringify(recData));
+          //const compressedData = JSON.stringify(recData);
+          localStorage.setItem('metabolitics-data', compressedData);
           this.router.navigate(['/analyze/excel-data']);
 
 
@@ -170,7 +181,13 @@ export class UploadComponent {
   //////////////////////////// excel
 
   incomingfile(event) {
-    this.notify2.info('File Upload', 'File uploading');
+    this.notify2.info('File Upload', 'File uploading',{
+      timeOut:5000,
+    });
+    setTimeout(()=> 
+      this.notify2.info('Matching...', 'Performing metabolite matching. This may take a while. Please wait.',{
+      timeOut:50000,
+    }), 5000);
     this.file5 = event.target.files[0];
     this.onFileChange(this.file5);
   }
@@ -198,9 +215,10 @@ export class UploadComponent {
       this.httpClient.post(`${AppSettings.API_ENDPOINT}/excel`, {
         data: data2, meta: meta
       }).subscribe(data => {
+          this.notify2.remove();            //To remove all existing notifications
           const recData = data as JSON;
-          
-          localStorage.setItem('metabolitics-data', JSON.stringify(recData));
+          const compressedData = LZString.compress(JSON.stringify(recData));
+          localStorage.setItem('metabolitics-data',compressedData);
           console.log(recData);
           this.router.navigate(['/analyze/excel-data']);
 
