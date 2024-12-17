@@ -39,6 +39,8 @@ import { MainComponent } from './main/main.component';
 import { SearchBarComponent } from 'src/metabol.search-engine/components';
 import { MainsearchComponent } from './mainsearch/mainsearch.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import { MainsearchComponent } from './mainsearch/mainsearch.component';
     MatExpansionModule,
     MatTableModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
 
     MetabolCommonModule,
     MetabolAuthModule,
