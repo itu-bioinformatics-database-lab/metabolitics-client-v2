@@ -8,6 +8,7 @@ import { LoginService } from "../../../metabol.auth/services";
 import { AppSettings } from "../../../app";
 import { DialogPathwayVisualizationComponent } from '../dialog-pathway-visualization';
 import { DialogReactionResultsComponent } from '../dialog-reaction-results';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import * as _ from 'lodash';
 
@@ -58,7 +59,7 @@ export class PastAnalysisDetailComponent implements OnInit {
     let apiUrl = `${AppSettings.API_ENDPOINT}/analysis/detail/${this.id}`;
     this.http.get(apiUrl, this.login.optionByAuthorization())
       .subscribe((data: any) => {
-        // console.log(data);
+        //console.log(data);
         this.data2 = JSON.parse(JSON.stringify(data['fold_changes']));
 
       for (let t in this.data2){
@@ -68,6 +69,7 @@ export class PastAnalysisDetailComponent implements OnInit {
       }
 
         this.data = data;
+        //console.log(data);
         let values = this.data['results_pathway'][0];
         let eliminated = {};
         let keys = _.keys(values)
@@ -101,9 +103,4 @@ export class PastAnalysisDetailComponent implements OnInit {
     this.router.navigate(['/panel/past-analysis', this.selectedObj]);
 
   }
-
-
-
-
-
 }

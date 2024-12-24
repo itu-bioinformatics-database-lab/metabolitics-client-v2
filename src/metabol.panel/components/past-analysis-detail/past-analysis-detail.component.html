@@ -63,10 +63,6 @@
         </thead>
         <tbody>
           <tr>
-            <td>Case Name:</td>
-            <td style="text-transform: capitalize;">{{data?.case_name}}</td>
-          </tr>
-          <tr>
             <td>Method:</td>
             <td style="text-transform: capitalize;">{{data?.method}}</td>
           </tr>
@@ -74,12 +70,18 @@
             <td>Disease:</td>
             <td style="text-transform: capitalize;">{{data?.disease}}</td>
           </tr>
+          <!--
+          <tr>
+            <td>Start:</td>
+            <td style="text-transform: capitalize;">{{data?.start}}</td>
+          </tr>
+          -->
         </tbody>
       </table>
     </div>
     <div *ngIf="data && !data?.results_pathway">
       <mat-spinner diameter="50" style="margin:30px auto 10px auto;"></mat-spinner>
-      <div style="text-align: center;">Analysis in progress...</div>
+      <div style="text-align: center;">Analysis in progress... It may take a while depending on the number of samples. Please check back later.</div>
     </div>
     <div *ngIf="data?.results_pathway">
       <div>
