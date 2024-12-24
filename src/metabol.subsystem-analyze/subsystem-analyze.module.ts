@@ -7,7 +7,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
 import { MatFormFieldModule, MatInputModule , MatSelectModule } from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   ConcentrationTableComponent,
@@ -35,6 +35,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatInputModule ,
     MatSelectModule,
     MatRippleModule,
+    MatProgressSpinnerModule,
 
     subsystemAnalyzeRouting,
     MetabolCommonModule
