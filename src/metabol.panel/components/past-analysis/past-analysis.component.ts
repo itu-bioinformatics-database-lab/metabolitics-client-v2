@@ -68,7 +68,6 @@ export class PastAnalysisComponent implements OnInit {
 
       .subscribe((d:any) => {
         this.data[type] = d;
-        
         this.createForm();
         if (type == 'public') {
           this.loading = false;
