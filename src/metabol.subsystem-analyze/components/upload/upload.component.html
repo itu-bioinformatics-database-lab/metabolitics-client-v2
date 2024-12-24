@@ -44,9 +44,8 @@
               <input type="file" class="form-control" style="display: inline-block;" (change)="readText($event)" placeholder="Upload file" accept=".txt">
         </div>
       </div>
-
-
   </div>
+
 </div>
 
 
@@ -59,4 +58,11 @@
 
   <div *ngIf="conTable.length">
     <concentration-table [conTable]="conTable"></concentration-table>
+  </div>
+
+  <div *ngIf="loading && !conTable.length">
+    <mat-spinner diameter="50" style="margin:30px auto 10px auto;"></mat-spinner>
+    <div style="text-align: center;">
+      Mapping metabolites to the standard names. This may take take a while. Please wait to see the list of mapped metabolites. 
+    </div>
   </div>

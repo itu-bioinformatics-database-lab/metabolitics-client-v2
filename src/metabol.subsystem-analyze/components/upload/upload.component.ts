@@ -23,6 +23,7 @@ import synonyms from '../../../assets/datasets/synonyms_latest.json';
 import { NotificationsService } from 'angular2-notifications';
 
 
+
 @Component({
   selector: 'app-upload',
   templateUrl: 'upload.component.html',
@@ -46,6 +47,8 @@ export class UploadComponent {
   file2: File;
   file5: any;
 
+  loading: boolean = false;
+
 
   constructor(fb: FormBuilder,
   private subSerivce: SubsystemAnalyzeService,
@@ -61,7 +64,8 @@ export class UploadComponent {
   }
 
   jsonChange($event) {
-    this.notify2.info('File Upload', 'File uploading');
+    //this.notify2.info('File Upload', 'File uploading');
+    this.loading = true;
     this.readJson($event.target);
   }
 
@@ -98,7 +102,8 @@ export class UploadComponent {
   }
 
   csvChange($event) {
-    this.notify2.info('File Upload', 'File uploading');
+    this.loading = true;
+    //this.notify2.info('File Upload', 'File uploading');
     
     this.readCsv($event.target);
   }
@@ -138,6 +143,7 @@ export class UploadComponent {
 
   ///////////////////////////////// Workbench
   readText(inputValue: any){
+    /*
     this.notify2.info('File Upload', 'File uploading',{
       timeOut:5000,
     });
@@ -145,7 +151,7 @@ export class UploadComponent {
       this.notify2.info('Matching...', 'Performing metabolite matching. This may take a while. Please wait.',{
       timeOut:50000,
     }), 5000);
-
+    */
     this.file3 = inputValue.target.files[0];
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
@@ -181,13 +187,14 @@ export class UploadComponent {
   //////////////////////////// excel
 
   incomingfile(event) {
-    this.notify2.info('File Upload', 'File uploading',{
+    this.loading = true;
+    /*this.notify2.info('File Upload', 'File uploading',{
       timeOut:5000,
     });
     setTimeout(()=> 
       this.notify2.info('Matching...', 'Performing metabolite matching. This may take a while. Please wait.',{
       timeOut:50000,
-    }), 5000);
+    }), 5000);*/
     this.file5 = event.target.files[0];
     this.onFileChange(this.file5);
   }
