@@ -29,6 +29,7 @@ export class PathwayHistogramComponent implements OnInit, AfterViewInit {
       automargin: true,
     },
     yaxis: {
+      title : "",
       automargin: true,
     },
     margin: {
@@ -54,6 +55,10 @@ export class PathwayHistogramComponent implements OnInit, AfterViewInit {
       this.data[0].marker.color = sortedScores.map(x => x[1] > 0 ? '#3F51B5' : '#E91E63');
     }
     Plotly.react('histogram', this.data, this.layout);
+
+    if(this.method == "Pathway Enrichment"){
+      this.layout.yaxis.title = "-log(pval)";
+    }
   }
 
 }
