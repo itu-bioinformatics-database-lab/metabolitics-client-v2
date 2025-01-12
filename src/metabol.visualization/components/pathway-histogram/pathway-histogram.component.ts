@@ -29,7 +29,7 @@ export class PathwayHistogramComponent implements OnInit, AfterViewInit {
       automargin: true,
     },
     yaxis: {
-      title : "",
+      title : "-log(pval)",
       automargin: true,
     },
     margin: {
