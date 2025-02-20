@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { AppDataLoader } from '../../../metabol.common/services';
 import * as _ from 'lodash';
+import { any } from 'codelyzer/util/function';
 
 @Component({
   selector: 'app-subsystem-detail',
@@ -25,13 +26,25 @@ export class SubsystemDetailComponent implements OnInit {
   pathway: string;
   reactions: any[];
   connectedSubsystems: string[];
+  reaction_metabolites: Map<any, any[]> = new Map;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.pathway = decodeURIComponent(params['id']);
       console.log(this.pathway);
       this.loader.get('Recon3D', (recon) => {
-        this.reactions = recon.pathways[this.pathway].map(x => recon.reactions[x]);
+      this.reactions = recon.pathways[this.pathway].map(x => recon.reactions[x]);
+      for (let reaction of this.reactions) {
+        console.log(reaction.metabolites);
+        let updatedMetabolites: { [key: string]: any } = {};
+        for(let metabolite of Object.keys(reaction.metabolites)){
+          let metabolite_synonym = recon.metabolites[metabolite].name;
+
+          updatedMetabolites[metabolite_synonym] = reaction.metabolites[metabolite];
+        }
+        console.log(updatedMetabolites);
+        reaction.metabolites = updatedMetabolites;
+      }
       });
     });
   }
