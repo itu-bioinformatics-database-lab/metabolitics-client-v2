@@ -6,7 +6,12 @@
 
         <button type="button" class="btn btn-default" (click)="submit()">
 		  Compare
-			</button>
+		</button>
+
+		<button type="button" class="btn btn-danger" (click)="delete_analysis()">
+			Delete
+		</button>
+
         <form [formGroup]="form">
 			<div *ngIf="!(data['list'].length != 0 || data['public'].length != 0) && loading">
 				<mat-spinner diameter="50" style="margin:0 auto 10px auto;"></mat-spinner>

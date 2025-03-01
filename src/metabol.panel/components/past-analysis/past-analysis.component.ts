@@ -6,6 +6,7 @@ import { map } from "rxjs/operators";
 import { AppSettings } from "../../../app";
 import { LoginService } from "../../../metabol.auth/services";
 import * as _ from 'lodash';
+import { NotificationsService } from 'angular2-notifications';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class PastAnalysisComponent implements OnInit {
     private fb: FormBuilder,
     private login: LoginService,
     private actRoute: ActivatedRoute,
+    private notify2 : NotificationsService,
     private router: Router) {
     }
 
@@ -97,5 +99,33 @@ export class PastAnalysisComponent implements OnInit {
     let selecteds = _.toPairs(this.form.value).filter(x => x[1]).map(x => x[0]);
     this.router.navigate(['panel/compare-analysis', selecteds]);
   }
+
+  delete_analysis() {
+    let selecteds = Object.entries(this.form.value).filter(([key, value]) => value === true).map(([key]) => key); 
+
+    console.log(selecteds);
+
+    if(selecteds.length > 0){
+      if(this.login.isDemoUser()){
+        alert("As a demo user, you don't have permission to delete analyses. Please log in to proceed with deletion.")
+      }
+      else if(this.login.isLoggedIn){
+        let apiUrl = `${AppSettings.API_ENDPOINT}/analysis/delete_analysis`;
+        this.http.post(apiUrl, { analysis_ids: selecteds }).subscribe({
+          next: (response) => {
+            console.log("Delete successful:", response);
+            alert("Analyses deleted successfully.");
+          },
+          error: (error) => {
+            console.error("Delete failed:", error);
+            alert("Error deleting analyses.");
+          }
+        });
+      }
+      else{
+        alert("You should log in to delete analyses.");
+      }
+    }
+  }  
 
 }
