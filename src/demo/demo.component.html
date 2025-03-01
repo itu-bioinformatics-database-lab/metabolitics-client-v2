@@ -375,6 +375,35 @@
       </div>
     </div>
 
+    <div class="panel panel-success" id="Link10">
+      <div class="panel-heading">How to Interpret Diff Scores</div>
+      <div class="panel-body">
+        At a high level, a pathway/reaction “diff” value represents the differentiation of the pathway/reaction activity for an individual 
+        compared to healthy individuals. Hence, a positive diff value is interpreted as increased activity, while a negative diff value is 
+        interpreted as decreased activity for a pathway/rection. From a technical perspective, a diff score represents the change in the range 
+        of possible flux values for a reaction. That is, a positive diff score indicates that the actual activity level of a reaction would be 
+        drawn from a range that includes mostly larger values, while a negative score means that the actual activity level would be drawn from 
+        a range that includes mostly smaller values. Hence, in positive diff cases, the likelihood of having larger flux values is higher compared 
+        to healthy individuals, while in negative diff cases, the likelihood of having smaller flux values is higher for the corresponding 
+        reactions/pathways. The magnitude of a diff score represents the expectation of how much higher (for positive scores) or lower 
+        (for negative scores) the flux magnitude of a reaction would be in a patient compared to the average healthy reference values. 
+        For simplicity, we assume that flux values within each flux interval are uniformly distributed. As an example, for a reaction R, let [2, 4]
+        be the reference flux interval obtained from healthy individuals, and [3, 5] be the flux interval computed for a patient. R may have the 
+        following possible flux value combinations in a healthy individual and the patient (only integer flux values are considered in the example 
+        for brevity, even though real flux values are also possible in practice): [(2, 3), (2, 4), (2, 5), (3, 3), (3, 4), (3, 5), (4, 3), (4, 4), 
+        (4, 5)]. Then, the set of corresponding flux differences between the patient and a healthy individual would be [1, 2, 3, 0, 1, 2, -1, 0, 1].
+        The average (i.e., expectation) of these differences would be 1, which is also the diff score for R. The below figure illustrates several 
+        example scenarios and the associated diff scores. In each case, the left-hand side shows the original flux intervals as computed by flux
+        variability analysis (FVA), while the right-hand side shows the corresponding sub-intervals and the associated diff values. 
+        The figure presents examples of positive diff scores. The symmetric cases (where patient and reference-healthy labels are switched)
+        would provide examples of negative diff scores.
+
+        <br><br>
+        <img class="img-responsive img-center" src="assets/demo/diffscores.png" style="width: 90%; height: auto;">
+        <br><br><br>
+      </div>
+    </div>
+
 
   </div>
 
@@ -390,6 +419,8 @@
       <a href="http://metabolitics.itu.edu.tr/demo#Link7" class="list-group-item">Comparison of Different Analysis Results for Different Datasets</a>
       <a href="http://metabolitics.itu.edu.tr/demo#Link8" class="list-group-item">Disease Association</a>
       <a href="http://metabolitics.itu.edu.tr/demo#Link9" class="list-group-item">Disease Prediction</a>
+      <a href="http://metabolitics.itu.edu.tr/demo#Link10" class="list-group-item">How to Interpret Diff Scores</a>
+
 
     </div>
     <div class="list-group">
