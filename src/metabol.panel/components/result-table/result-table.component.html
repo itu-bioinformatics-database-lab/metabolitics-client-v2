@@ -1,5 +1,6 @@
 <div class="table-container">
-  <h4 *ngIf="title" class="table-header">Pathway-Level {{title}} (<a *ngIf="title == 'Diff Score'" [routerLink] = "['/demo']" [fragment]="'Link10'">How to interpret diff scores</a>)</h4>
+  <h4 *ngIf="title" class="table-header">Pathway-Level {{title}}</h4>
+   <ng-container *ngIf="title == 'Diff Score'"> (<a [routerLink] = "['/demo']" [fragment]="'Link10'" style="font-size: 16px;">How to interpret diff scores?</a>)</ng-container>
   <button class="csv-download-button"  (click)="downloadCSV()">Export Pathway Scores as CSV</button>
 </div>
 
