@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { map } from "rxjs/operators";
@@ -75,9 +76,6 @@ export class PastAnalysisComponent implements OnInit {
           this.loading = false;
         }
       });
-
-    
-
 }
 
   createForm() {
@@ -101,31 +99,58 @@ export class PastAnalysisComponent implements OnInit {
   }
 
   delete_analysis() {
-    let selecteds = Object.entries(this.form.value).filter(([key, value]) => value === true).map(([key]) => key); 
-
+    let selecteds = Object.entries(this.form.value)
+      .filter(([key, value]) => value === true)
+      .map(([key]) => key); 
+  
     console.log(selecteds);
-
-    if(selecteds.length > 0){
-      if(this.login.isDemoUser()){
-        alert("As a demo user, you don't have permission to delete analyses. Please log in to proceed with deletion.")
-      }
-      else if(this.login.isLoggedIn){
+  
+    if (selecteds.length > 0) {
+      if (this.login.isDemoUser()) {
+        this.notify2.error("Demo User", "As a demo user, you don't have permission to delete analyses.");
+      } else if (this.login.isLoggedIn) {
         let apiUrl = `${AppSettings.API_ENDPOINT}/analysis/delete_analysis`;
-        this.http.post(apiUrl, { analysis_ids: selecteds }).subscribe({
+        let token = localStorage.getItem("access_token");
+  
+        if (!token) {
+          this.notify2.error("Possible Token Error", "Your session might have expired. Please log in again.");
+          return;
+        }
+  
+        let headers = new HttpHeaders({
+          "Authorization": `JWT ${token}`,
+          "Content-Type": "application/json"
+        });
+  
+        this.http.request('POST', apiUrl, {
+          body: { analysis_ids: selecteds },
+          headers: headers
+        }).subscribe({
           next: (response) => {
             console.log("Delete successful:", response);
-            alert("Analyses deleted successfully.");
+            this.notify2.success("Delete successful.", "Your analyses are deleted succesfully.");
+            this.router.navigate(['/panel/past-analysis']);
+
+            const selectedIds = selecteds.map(id => Number(id));
+
+            this.data.list = this.data.list.filter(analysis => !selectedIds.includes(analysis.avg_id));
+            this.data.public = this.data.public.filter(analysis => !selectedIds.includes(analysis.avg_id));
+
+            this.createForm(); 
           },
           error: (error) => {
             console.error("Delete failed:", error);
-            alert("Error deleting analyses.");
+            if(error.status == 404){
+              this.notify2.error("Unauthorized", "You cannot delete these analyses as you are not the owner.");
+            }
+            else{
+              this.notify2.error("Error", "Error deleting analyses.");
+            }
           }
         });
-      }
-      else{
+      } else {
         alert("You should log in to delete analyses.");
       }
     }
-  }  
-
+  }
 }
