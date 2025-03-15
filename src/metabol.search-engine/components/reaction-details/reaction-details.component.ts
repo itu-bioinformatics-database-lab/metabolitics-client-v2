@@ -22,6 +22,14 @@ export class ReactionDetailsComponent implements OnInit {
       this.loader.get("Recon3D", (recon) => {
         this.reaction = recon.reactions[params['id']];
         this.relatedMetabolites = _.keys(this.reaction.metabolites).map(x => recon.metabolites[x]);
+
+        let updatedMetabolites: { [id: string]: any } = {};
+        for (let metabolite of Object.keys(this.reaction.metabolites)) {
+          let metabolite_synonym = recon.metabolites[metabolite].name;
+          let uniqueKey = `${metabolite_synonym} (${metabolite})`; 
+          updatedMetabolites[uniqueKey] = [this.reaction.metabolites[metabolite], metabolite];
+        }
+        this.reaction.metabolites = updatedMetabolites;        
       });
     });
   }

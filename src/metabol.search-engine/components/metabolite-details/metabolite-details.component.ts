@@ -8279,7 +8279,16 @@ export class MetaboliteDetailsComponent implements OnInit {
             this.synonyms.push(synonym.join('') + " (" + name + ")");
         });
         this.relatedReactions = this.metabolite.reactions
-          .map(x => recon.reactions[x]);
+          .map(x => recon.reactions[x]); 
+          for (let reaction of this.relatedReactions) {
+            let updatedMetabolites: { [id: string]: any } = {};
+            for (let metabolite of Object.keys(reaction.metabolites)) {
+              let metabolite_synonym = recon.metabolites[metabolite].name;
+              let uniqueKey = `${metabolite_synonym} (${metabolite})`; 
+              updatedMetabolites[uniqueKey] = [reaction.metabolites[metabolite], metabolite];
+            }
+            reaction.metabolites = updatedMetabolites;
+          }
         this.relatedPathways = this.metabolite.reactions
           .map(x => recon.reactions[x].subsystem);
         this.relatedPathways.sort();
