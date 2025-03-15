@@ -8,13 +8,13 @@ import {Router} from '@angular/router';
 })
 export class ChemicalEquationComponent {
   @Input() metabolites: any[];
-  @Input() selectedMetabolite: { id: string, stoichiometry: number };
-  reactants: Array<{ id: string, stoichiometry: number }>;
-  products: Array<{ id: string, stoichiometry: number }>;
+  @Input() selectedMetabolite: any;
+  reactants: Array<{ id: string, name: string, stoichiometry: number }>;
+  products: Array<{ id: string, name: string, stoichiometry: number }>;
 
   constructor() {
-    this.reactants = new Array<{ id: string, stoichiometry: number }>();
-    this.products = new Array<{ id: string, stoichiometry: number }>();
+    this.reactants = new Array<{ id: string, name: string, stoichiometry: number }>();
+    this.products = new Array<{ id: string, name: string, stoichiometry: number }>();
   }
 
   // TODO: check if given data is resolved
@@ -22,17 +22,20 @@ export class ChemicalEquationComponent {
     this.constructor();
 
     for (let key in this.metabolites) {
-      if (this.metabolites[key] > 0)
+      if (this.metabolites[key][0] > 0)
         this.products.push({
-          id: key,
-          stoichiometry: this.metabolites[key]
+          id: this.metabolites[key][1], 
+          name: key.replace(/\s*\(.*?\)$/, ''), 
+          stoichiometry: this.metabolites[key][0]
         });
       else
         this.reactants.push({
-          id: key,
-          stoichiometry: Math.abs(this.metabolites[key])
+          id: this.metabolites[key][1],
+          name: key.replace(/\s*\(.*?\)$/, ''),
+          stoichiometry: Math.abs(this.metabolites[key][0])
         });
     }
   }
+  
 
 }
