@@ -101,7 +101,7 @@ export class PastAnalysisComponent implements OnInit {
   delete_analysis() {
     let selecteds = Object.entries(this.form.value)
       .filter(([key, value]) => value === true)
-      .map(([key]) => key); 
+      .map(([key]) => key);
   
     console.log(selecteds);
   
@@ -122,28 +122,25 @@ export class PastAnalysisComponent implements OnInit {
           "Content-Type": "application/json"
         });
   
-        this.http.request('POST', apiUrl, {
-          body: { analysis_ids: selecteds },
-          headers: headers
-        }).subscribe({
+        // Using http.post instead of http.request
+        this.http.post(apiUrl, { analysis_ids: selecteds }, { headers: headers }).subscribe({
           next: (response) => {
             console.log("Delete successful:", response);
-            this.notify2.success("Delete successful.", "Your analyses are deleted succesfully.");
+            this.notify2.success("Delete successful.", "Your analyses are deleted successfully.");
             this.router.navigate(['/panel/past-analysis']);
-
+  
             const selectedIds = selecteds.map(id => Number(id));
-
+  
             this.data.list = this.data.list.filter(analysis => !selectedIds.includes(analysis.avg_id));
             this.data.public = this.data.public.filter(analysis => !selectedIds.includes(analysis.avg_id));
-
-            this.createForm(); 
+  
+            this.createForm();
           },
           error: (error) => {
             console.error("Delete failed:", error);
-            if(error.status == 404){
+            if (error.status == 404) {
               this.notify2.error("Unauthorized", "You cannot delete these analyses as you are not the owner.");
-            }
-            else{
+            } else {
               this.notify2.error("Error", "Error deleting analyses.");
             }
           }
