@@ -109,7 +109,7 @@ export class PastAnalysisComponent implements OnInit {
       if (this.login.isDemoUser()) {
         this.notify2.error("Demo User", "As a demo user, you don't have permission to delete analyses.");
       } else if (this.login.isLoggedIn) {
-        let apiUrl = `${AppSettings.API_ENDPOINT}/analysis/delete_analysis`;
+        let apiUrl = `${AppSettings.API_ENDPOINT}/api/analysis/delete_analysis`;
         let token = localStorage.getItem("access_token");
   
         if (!token) {
